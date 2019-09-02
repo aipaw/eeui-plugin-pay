@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 const file = require('./file');
+const dirCut = /^win/.test(process.platform) ? "\\" : "/";
 
 let workPath = process.cwd();
-let androidPath = workPath + '/platforms/android/eeuiApp';
-let gradPath = androidPath + '/build.gradle';
+let androidPath = workPath + dirCut + 'platforms' + dirCut + 'android' + dirCut + 'eeuiApp';
+let gradPath = androidPath + dirCut + 'build.gradle';
 let result = fs.readFileSync(gradPath, 'utf8');
 let values = result.split('\n');
 
@@ -18,22 +19,22 @@ for (let i = 0; i < values.length; i++) {
     }
 }
 
-let pluginName = path.resolve(__dirname + "/../");
-pluginName = pluginName.substr(pluginName.lastIndexOf('/') + 1);
+let pluginName = path.resolve(__dirname + dirCut + ".." + dirCut);
+pluginName = pluginName.substr(pluginName.lastIndexOf(dirCut) + 1);
 
-let pluginPath = workPath + '/plugins/android/' + pluginName;
-let from = pluginPath + '/.eeuiScript/wxapi';
-let to = pluginPath + '/src/main/java/' + packageName.replace(/\./g, '/') + '/wxapi';
+let pluginPath = workPath + dirCut + 'plugins' + dirCut + 'android' + dirCut + pluginName;
+let from = pluginPath + dirCut + '.eeuiScript' + dirCut + 'wxapi';
+let to = pluginPath + dirCut + 'src' + dirCut + 'main' + dirCut + 'java' + dirCut + packageName.replace(/\./g, dirCut) + dirCut + 'wxapi';
 file.mkdirsSync(to);
 
 function _copyFile() {
-    file.changeFile(pluginPath + '/src/main/AndroidManifest.xml', 'app.eeui.playground', packageName);
-    file.changeFileTo(from + '/WXPayEntryActivity.java', to + '/WXPayEntryActivity.java', 'app.eeui.playground', packageName);
+    file.changeFile(pluginPath + dirCut + 'src' + dirCut + 'main' + dirCut + 'AndroidManifest.xml', 'app.eeui.xxx', packageName);
+    file.changeFileTo(from + dirCut + 'WXPayEntryActivity.java', to + dirCut + 'WXPayEntryActivity.java', 'app.eeui.xxx', packageName);
     _updateGradle();
 }
 
 function _updateGradle() {
-    let appGradpath = androidPath + '/app/build.gradle';
+    let appGradpath = androidPath + dirCut + 'app' + dirCut + 'build.gradle';
     let appResult = fs.readFileSync(appGradpath, 'utf8');
     if (appResult.indexOf("project(':eeui_" + pluginName + "').file('libs')") === -1) {
         let repositories = "repositories {\n" +

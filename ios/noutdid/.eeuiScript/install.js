@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 const file = require('./file');
+const dirCut = /^win/.test(process.platform) ? "\\" : "/";
 
 let workPath = process.cwd();
-let iosPath = workPath + '/platforms/ios/eeuiApp/';
-let pbxprojPath = iosPath + '/eeuiApp.xcodeproj/project.pbxproj';
+let iosPath = workPath + dirCut + 'platforms' + dirCut + 'ios' + dirCut + 'eeuiApp' + dirCut;
+let pbxprojPath = iosPath + dirCut + 'eeuiApp.xcodeproj' + dirCut + 'project.pbxproj';
 let result = fs.readFileSync(pbxprojPath, 'utf8');
 let values = result.split('\n');
 
@@ -21,10 +22,10 @@ for (let i = 0; i < values.length; i++) {
     }
 }
 
-let pluginName = path.resolve(__dirname + "/../");
-pluginName = pluginName.substr(pluginName.lastIndexOf('/') + 1);
+let pluginName = path.resolve(__dirname + dirCut + ".." + dirCut);
+pluginName = pluginName.substr(pluginName.lastIndexOf(dirCut) + 1);
 
-file.replaceDictString(workPath + '/platforms/ios/eeuiApp/eeuiApp/Info.plist', 'eeuiAppName', 'eeuiApp' + replaceUpperCase(bundleIdentifier));
+file.replaceDictString(workPath + dirCut + 'platforms' + dirCut + 'ios' + dirCut + 'eeuiApp' + dirCut + 'eeuiApp' + dirCut + 'Info.plist', 'eeuiAppName', 'eeuiApp' + replaceUpperCase(bundleIdentifier));
 
 function replaceUpperCase(string) {
     try {
