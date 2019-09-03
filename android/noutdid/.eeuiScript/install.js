@@ -28,7 +28,6 @@ let to = pluginPath + dirCut + 'src' + dirCut + 'main' + dirCut + 'java' + dirCu
 file.mkdirsSync(to);
 
 function _copyFile() {
-    file.changeFile(pluginPath + dirCut + 'src' + dirCut + 'main' + dirCut + 'AndroidManifest.xml', 'app.eeui.xxx', packageName);
     file.changeFileTo(from + dirCut + 'WXPayEntryActivity.java', to + dirCut + 'WXPayEntryActivity.java', 'app.eeui.xxx', packageName);
     _updateGradle();
 }
