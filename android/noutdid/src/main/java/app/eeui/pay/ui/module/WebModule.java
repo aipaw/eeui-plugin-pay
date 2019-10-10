@@ -40,23 +40,5 @@ public class WebModule {
         myApp().alipay(webView.getContext(), payData, eeui.MCallback(callback));
     }
 
-    /**
-     * 银联微信支付（无回调功能）
-     *
-     * @param payData
-     */
-    public static void union_weixin(ExtendWebView webView, String payData) {
-        myApp().union_weixin(webView.getContext(), payData);
-    }
-
-    /**
-     * 银联支付宝支付（无回调功能）
-     *
-     * @param payData
-     */
-    public static void union_alipay(ExtendWebView webView, String payData) {
-        myApp().union_alipay(webView.getContext(), payData);
-    }
-
 }
 

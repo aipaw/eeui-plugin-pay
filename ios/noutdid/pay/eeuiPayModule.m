@@ -2,7 +2,6 @@
 #import "eeuiPayModule.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "WXApi.h"
-#import "UMSPPPayUnifyPayPlugin.h"
 #import <WeexPluginLoader/WeexPluginLoader.h>
 
 static WXModuleKeepAliveCallback alipayCallback;
@@ -118,31 +117,6 @@ WX_EXPORT_METHOD(@selector(union_alipay:))
     alipayCallback = callback;
     [[AlipaySDK defaultService] payOrder:payData fromScheme:fromScheme callback:^(NSDictionary *resultDic) {
         [eeuiPayModule onAlipayResp:resultDic];
-    }];
-}
-
-//银联微信支付（无回调功能）
-- (void)union_weixin:(NSString*)payData
-{
-    NSData *jsonData = [payData dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *err;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
-    if (!err && dic[@"appid"]) {
-        [UMSPPPayUnifyPayPlugin registerApp:dic[@"appid"]];
-    }else{
-        weixinCallback(@{@"status":@(-999), @"msg":@"注册微信支付失败"}, NO);
-        return;
-    }
-    [UMSPPPayUnifyPayPlugin payWithPayChannel:CHANNEL_WEIXIN payData:payData callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
-
-    }];
-}
-
-//银联支付宝支付（无回调功能）
-- (void)union_alipay:(NSString*)payData
-{
-    [UMSPPPayUnifyPayPlugin payWithPayChannel:CHANNEL_ALIPAY payData:payData callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
-
     }];
 }
 

@@ -33,14 +33,4 @@
     [self.pay alipay:payData callback:callback];
 }
 
-- (void)union_weixin:(NSString*)payData
-{
-    [self.pay union_weixin:payData];
-}
-
-- (void)union_alipay:(NSString*)payData
-{
-    [self.pay union_alipay:payData];
-}
-
 @end

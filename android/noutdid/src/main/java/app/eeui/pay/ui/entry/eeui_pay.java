@@ -166,40 +166,4 @@ public class eeui_pay {
         Thread payThread = new Thread(payRunnable);
         payThread.start();
     }
-
-    /**
-     * 银联微信支付（无回调功能）
-     *
-     * @param payData
-     */
-    @JSMethod
-    public void union_weixin(Context context, String payData) {
-        UnifyPayRequest payRequest = new UnifyPayRequest();
-        payRequest.payChannel = UnifyPayRequest.CHANNEL_WEIXIN;
-        payRequest.payData = payData;
-        UnifyPayPlugin.getInstance(context).setListener(new UnifyPayListener() {
-            @Override
-            public void onResult(String resultCode, String resultInfo) {
-
-            }
-        }).sendPayRequest(payRequest);
-    }
-
-    /**
-     * 银联支付宝支付（无回调功能）
-     *
-     * @param payData
-     */
-    @JSMethod
-    public void union_alipay(Context context, String payData) {
-        UnifyPayRequest payRequest = new UnifyPayRequest();
-        payRequest.payChannel = UnifyPayRequest.CHANNEL_ALIPAY;
-        payRequest.payData = payData;
-        UnifyPayPlugin.getInstance(context).setListener(new UnifyPayListener() {
-            @Override
-            public void onResult(String resultCode, String resultInfo) {
-
-            }
-        }).sendPayRequest(payRequest);
-    }
 }

@@ -44,25 +44,5 @@ public class WeexModule extends WXModule {
     public void alipay(String payData, JSCallback callback) {
         myApp().alipay(mWXSDKInstance.getContext(), payData, callback);
     }
-
-    /**
-     * 银联微信支付（无回调功能）
-     *
-     * @param payData
-     */
-    @JSMethod
-    public void union_weixin(String payData) {
-        myApp().union_weixin(mWXSDKInstance.getContext(), payData);
-    }
-
-    /**
-     * 银联支付宝支付（无回调功能）
-     *
-     * @param payData
-     */
-    @JSMethod
-    public void union_alipay(String payData) {
-        myApp().union_alipay(mWXSDKInstance.getContext(), payData);
-    }
 }
 
