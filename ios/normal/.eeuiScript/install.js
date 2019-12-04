@@ -3,29 +3,35 @@ const path = require('path');
 const file = require('./file');
 const dirCut = /^win/.test(process.platform) ? "\\" : "/";
 
-let workPath = process.cwd();
-let iosPath = workPath + dirCut + 'platforms' + dirCut + 'ios' + dirCut + 'eeuiApp' + dirCut;
-let pbxprojPath = iosPath + dirCut + 'eeuiApp.xcodeproj' + dirCut + 'project.pbxproj';
-let result = fs.readFileSync(pbxprojPath, 'utf8');
-let values = result.split('\n');
+(function(){
+    let workPath = process.cwd();
+    let iosPath = workPath + dirCut + 'platforms' + dirCut + 'ios' + dirCut + 'eeuiApp' + dirCut;
+    let pbxprojPath = iosPath + dirCut + 'eeuiApp.xcodeproj' + dirCut + 'project.pbxproj';
+    if (!fs.existsSync(pbxprojPath)) {
+        return;
+    }   
 
-let bundleIdentifier = "";
-for (let i = 0; i < values.length; i++) {
-    let item = values[i];
-    if (item.indexOf('PRODUCT_BUNDLE_IDENTIFIER') !== -1) {
-        bundleIdentifier = (item.split('=')[1] + "").trim();
-        if (bundleIdentifier.indexOf(';') !== -1) {
-            bundleIdentifier = (bundleIdentifier.split(';')[0] + "").trim();
+    let result = fs.readFileSync(pbxprojPath, 'utf8');
+    let values = result.split('\n');
+
+    let bundleIdentifier = "";
+    for (let i = 0; i < values.length; i++) {
+        let item = values[i];
+        if (item.indexOf('PRODUCT_BUNDLE_IDENTIFIER') !== -1) {
+            bundleIdentifier = (item.split('=')[1] + "").trim();
+            if (bundleIdentifier.indexOf(';') !== -1) {
+                bundleIdentifier = (bundleIdentifier.split(';')[0] + "").trim();
+            }
+            bundleIdentifier = bundleIdentifier.replace(/\"/g, "");
+            break
         }
-        bundleIdentifier = bundleIdentifier.replace(/\"/g, "");
-        break
     }
-}
 
-let pluginName = path.resolve(__dirname + dirCut + ".." + dirCut);
-pluginName = pluginName.substr(pluginName.lastIndexOf(dirCut) + 1);
+    let pluginName = path.resolve(__dirname + dirCut + ".." + dirCut);
+    pluginName = pluginName.substr(pluginName.lastIndexOf(dirCut) + 1);
 
-file.replaceDictString(workPath + dirCut + 'platforms' + dirCut + 'ios' + dirCut + 'eeuiApp' + dirCut + 'eeuiApp' + dirCut + 'Info.plist', 'eeuiAppName', 'eeuiApp' + replaceUpperCase(bundleIdentifier));
+    file.replaceDictString(workPath + dirCut + 'platforms' + dirCut + 'ios' + dirCut + 'eeuiApp' + dirCut + 'eeuiApp' + dirCut + 'Info.plist', 'eeuiAppName', 'eeuiApp' + replaceUpperCase(bundleIdentifier));
+})();
 
 function replaceUpperCase(string) {
     try {
