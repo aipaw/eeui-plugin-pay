@@ -7,9 +7,9 @@ const dirCut = /^win/.test(process.platform) ? "\\" : "/";
     let workPath = process.cwd();
     let iosPath = workPath + dirCut + 'platforms' + dirCut + 'ios' + dirCut + 'eeuiApp' + dirCut;
     let pbxprojPath = iosPath + dirCut + 'eeuiApp.xcodeproj' + dirCut + 'project.pbxproj';
-    if (!fs.existsSync(oldPath)) {
+    if (!fs.existsSync(pbxprojPath)) {
         return;
-    }       
+    }   
 
     let result = fs.readFileSync(pbxprojPath, 'utf8');
     let values = result.split('\n');
