@@ -1,0 +1,6 @@
+{
+    "private": true,
+    "dependencies": {
+        "plist": "^3.0.1"
+    }
+}
