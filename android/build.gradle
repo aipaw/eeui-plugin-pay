@@ -43,7 +43,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation (name: 'qmf-ppplugin-android-3.0.3', ext: 'aar')
-    implementation (name: 'alipaySdk-15.6.0-20190226104053', ext: 'aar')
+    implementation (name: 'alipaySdk-15.6.0-20190226104104-noUtdid', ext: 'aar')
     implementation "com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6"
     //
     compileOnly "com.alibaba:fastjson:${project.fastjsonLibVersion}"
