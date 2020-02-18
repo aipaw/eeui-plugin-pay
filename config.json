@@ -1,5 +1,5 @@
 {
-	"desc": "第三方支付模块（支付宝、微信支付）。注：无utdid",
+	"desc": "第三方支付模块（支付宝、微信支付）。",
 	"requireFormatName": "eeuiPay",
 	"requireName": "eeui/pay",
 	"title": "支付模块"
