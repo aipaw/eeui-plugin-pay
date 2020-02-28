@@ -9,17 +9,10 @@ let workPath = process.cwd();
 function __android() {
     let androidPath = path.resolve(workPath, 'platforms/android/eeuiApp');
     let gradPath = path.resolve(androidPath, 'build.gradle');
-    let result = fs.readFileSync(gradPath, 'utf8');
-    let values = result.split('\n');
     //
     let packageName = "";
-    for (let i = 0; i < values.length; i++) {
-        let item = values[i];
-        if (item.indexOf('applicationId') !== -1) {
-            packageName = (item.split('=')[1] + "").trim();
-            packageName = packageName.replace(/\"/g, "");
-            break
-        }
+    if (fs.existsSync(gradPath)) {
+        packageName = fs.readFileSync(gradPath, 'utf8').match(/applicationId\s*=\s*(["'])(.+?)\1/)[2];
     }
     //
     let pluginPath = path.resolve(__dirname, "../");
